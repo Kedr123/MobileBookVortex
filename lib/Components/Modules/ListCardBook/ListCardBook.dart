@@ -7,8 +7,6 @@ class ListCardBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      addAutomaticKeepAlives: true,
-
       children:[
           CardBook(),
           CardBook(),

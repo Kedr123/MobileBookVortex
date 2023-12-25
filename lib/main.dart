@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         scaffoldBackgroundColor: constantsColor.baseBackColor,
-        useMaterial3: true,
+        useMaterial3: false,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Книжная полка'),
     );
   }
 }
@@ -52,14 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
           maxLines: 1,
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ListCardBook()
-          ],
-        ),
-      ),
+      body: ListCardBook(),
 
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: constantsColor.baseOppositeBackColor,
