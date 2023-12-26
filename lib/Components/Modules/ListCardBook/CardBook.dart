@@ -2,10 +2,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import '../../../Models/Book.dart';
 import './../../../constants.dart' as constantsColor;
 
-class CardBook extends StatelessWidget {
-  // const CardBook({super.key});
+class CardBook extends StatefulWidget {
+  const CardBook({super.key, required this.book});
+
+  final Book book;
+
+  @override
+  State<CardBook> createState() => _CardBook();
+}
+
+class _CardBook extends State<CardBook> {
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +54,7 @@ class CardBook extends StatelessWidget {
                       children: [
                         Container(
                           child: Text(
-                            "Власть книжного червя. 3 ча сть: ученица храма...",
+                            widget.book.name,
                             textDirection: TextDirection.ltr,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -54,8 +63,8 @@ class CardBook extends StatelessWidget {
                                 TextStyle(color: Colors.black87, fontSize: 18),
                           ),
                         ),
-                        Text("Автор: Тоторо"),
-                        Text("EPAB"),
+                        Text("Автор: "+widget.book.author),
+                        Text(widget.book.file_link.split(".")[widget.book.file_link.split(".").length-1]),
                       ],
                     )))
           ],
