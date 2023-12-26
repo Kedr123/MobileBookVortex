@@ -1,9 +1,15 @@
 
 
+import 'dart:math';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_book_vortex/main.dart';
+import 'package:sqflite/sqflite.dart';
+import '../Controllers/BookController.dart';
+import '../Models/Book.dart';
 import './../constants.dart' as constantsColor;
 
 class CreatePage extends StatefulWidget {
@@ -18,8 +24,21 @@ class _CreatePageState extends State<CreatePage> {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       // allowedExtensions: ['txt'],
     );
+
     if (result != null) {
-      // File file = File(result.files.single.path!);
+      Random random = new Random();
+      PlatformFile file = result.files.first;
+      var newBook = Book(
+        id:0,
+        name: file.name,
+        author: "не указан",
+        bookmark: "0",
+        file_link: file.path.toString(),
+        img_link: "default"+random.nextInt(2).toString()+".png",
+        is_star: 0
+      );
+
+      await BookController.insertBook(newBook, databaseGlobal);
     } else {
       // User canceled the picker
     }

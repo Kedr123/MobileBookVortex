@@ -16,6 +16,10 @@ class CardBook extends StatefulWidget {
 
 class _CardBook extends State<CardBook> {
 
+  void getBook(book){
+    Navigator.of(context).pushNamed('/book',arguments: book);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +36,7 @@ class _CardBook extends State<CardBook> {
           alignment: Alignment.topLeft,
         ),
 
-        onPressed: ()=>{},
+        onPressed: (){getBook(widget.book);},
         child: Container(
         alignment: Alignment.topLeft,
         // padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -42,7 +46,7 @@ class _CardBook extends State<CardBook> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image(
-              image: AssetImage("lib/assets/img/dPre.png"),
+              image: AssetImage("lib/assets/img/"+widget.book.img_link),
               width: 85,
               height: 120,
             ),

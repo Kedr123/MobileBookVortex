@@ -13,12 +13,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'Models/Book.dart';
+import 'Pages/BookPage.dart';
+import 'Pages/ReadPage.dart';
 var databaseGlobal;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final database = openDatabase(
-      join(await getDatabasesPath(), 'mobile_book_vortex11'),
+      join(await getDatabasesPath(), 'mobile_book_vortex12'),
     onCreate: (db, version){
         return db.execute(
           'CREATE TABLE book(id INTEGER PRIMARY KEY, name TEXT, author TEXT, bookmark TEXT, file_link TEXT, img_link TEXT, is_star INTEGER)'
@@ -27,19 +29,19 @@ void main() async {
     version: 1,
   );
   databaseGlobal = database;
-  var newBook = Book(
-    id:0,
-    name:"Иди в лес2",
-    author:"Хрен",
-    bookmark: "0",
-    file_link: "link",
-    img_link:"ilink",
-    is_star:0,
-  );
-
-  await BookController.insertBook(newBook, database);
-  print("tt///");
-  print(await BookController.getAllBook(database));
+  // var newBook = Book(
+  //   id:0,
+  //   name:"Иди в лес2",
+  //   author:"Хрен",
+  //   bookmark: "0",
+  //   file_link: "link",
+  //   img_link:"ilink",
+  //   is_star:0,
+  // );
+  //
+  // await BookController.insertBook(newBook, database);
+  // print("tt///");
+  // print(await BookController.getAllBook(database));
 
   runApp(const MyApp());
 }
@@ -54,11 +56,17 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         scaffoldBackgroundColor: constantsColor.baseBackColor,
+        appBarTheme: AppBarTheme(
+          color: constantsColor.baseColor,
+          foregroundColor: constantsColor.baseColor
+        ),
         useMaterial3: false,
       ),
       routes: {
         '/':(context)=> MyHomePage(title: 'Книжная полка'),
         '/create':(context)=> CreatePage(),
+         '/book':(context)=>BookPage(),
+         '/read':(context)=>ReadPage(),
       },
       // home: const ,
     );
