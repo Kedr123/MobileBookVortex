@@ -32,6 +32,9 @@ class _BookPageState extends State<BookPage> {
     super.didChangeDependencies();
   }
 
+  void toReadBook(book){
+    Navigator.of(context).pushNamed('/read',arguments: book);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,7 @@ class _BookPageState extends State<BookPage> {
         ),
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: (){toReadBook(book);},
             icon: SvgPicture.asset('lib/assets/img/read.svg'),
           ),
           // IconButton(

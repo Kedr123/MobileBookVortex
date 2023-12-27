@@ -1,9 +1,8 @@
-import 'dart:math';
-
-import 'package:file_picker/file_picker.dart';
+import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:path/path.dart';
 import 'package:mobile_book_vortex/main.dart';
 import 'package:sqflite/sqflite.dart';
 import '../Controllers/BookController.dart';
@@ -19,10 +18,11 @@ class ReadPage extends StatefulWidget {
 
 class _ReadPageState extends State<ReadPage> {
   Book? book;
+  String? text;
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    final args = ModalRoute.of(context)?.settings.arguments;
+    final args = ModalRoute.of(context as BuildContext)?.settings.arguments;
     if(args==null) return;
     if(args is! Book) return;
     setState(() {
@@ -31,8 +31,17 @@ class _ReadPageState extends State<ReadPage> {
     super.didChangeDependencies();
   }
 
+  void readFile(String link)async{
+    File file = new File(link);
+    var content = await file.readAsString();
+    setState(() {
+      text = content;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    readFile(book?.file_link??"...");
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -53,9 +62,19 @@ class _ReadPageState extends State<ReadPage> {
         ],
       ),
       body: Container(
-        child: Column(
+        child: ListView(
           children: [
-            Text("Выбирите файл"),
+            Container(
+              child: Text(
+                text??"...",
+                textDirection: TextDirection.ltr,
+                // maxLines: 2,
+                // overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                style:
+                TextStyle(color: Colors.black87, fontSize: 18),
+              ),
+            ),
           ],
         ),
       ),
