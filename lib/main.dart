@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile_book_vortex/Components/Modules/ListCardBook/ListCardBook.dart';
 import 'package:mobile_book_vortex/Controllers/BookController.dart';
 import 'package:mobile_book_vortex/Pages/CreatePage.dart';
+import 'package:mobile_book_vortex/Pages/StarPage.dart';
 import './constants.dart' as constantsColor;
 
 import 'package:flutter/widgets.dart';
@@ -16,6 +17,7 @@ import 'Models/Book.dart';
 import 'Pages/BookPage.dart';
 import 'Pages/ReadPage.dart';
 var databaseGlobal;
+var getBooksF;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -29,20 +31,6 @@ void main() async {
     version: 1,
   );
   databaseGlobal = database;
-  // var newBook = Book(
-  //   id:0,
-  //   name:"Иди в лес2",
-  //   author:"Хрен",
-  //   bookmark: "0",
-  //   file_link: "link",
-  //   img_link:"ilink",
-  //   is_star:0,
-  // );
-  //
-  // await BookController.insertBook(newBook, database);
-  // print("tt///");
-  // print(await BookController.getAllBook(database));
-
   runApp(const MyApp());
 }
 
@@ -64,6 +52,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/':(context)=> MyHomePage(title: 'Книжная полка'),
+        '/star':(context)=> StarPage(),
         '/create':(context)=> CreatePage(),
          '/book':(context)=>BookPage(),
          '/read':(context)=>ReadPage(),
@@ -119,11 +108,11 @@ class _MyHomePageState extends State<MyHomePage> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         onTap: (item){
-          if(item==0){
-            Navigator.of(context).pushReplacementNamed("/");
-          }
           if(item==1){
             Navigator.of(context).pushReplacementNamed("/create");
+          }
+          if(item==2){
+            Navigator.of(context).pushReplacementNamed("/star");
           }
         },
         items: <BottomNavigationBarItem>[

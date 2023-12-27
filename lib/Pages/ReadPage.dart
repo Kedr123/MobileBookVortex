@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:path/path.dart';
 import 'package:mobile_book_vortex/main.dart';
 import 'package:sqflite/sqflite.dart';
 import '../Controllers/BookController.dart';
@@ -22,7 +21,7 @@ class _ReadPageState extends State<ReadPage> {
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    final args = ModalRoute.of(context as BuildContext)?.settings.arguments;
+    final args = ModalRoute.of(context)?.settings.arguments;
     if(args==null) return;
     if(args is! Book) return;
     setState(() {
@@ -39,6 +38,8 @@ class _ReadPageState extends State<ReadPage> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     readFile(book?.file_link??"...");
@@ -47,13 +48,13 @@ class _ReadPageState extends State<ReadPage> {
         centerTitle: true,
         backgroundColor: constantsColor.baseOppositeBackColor,
         title: Text(
-          "Книга",
-          maxLines: 1,
+          book?.name??"Книга",
+          maxLines: 2,
         ),
         actions: [
           IconButton(
             onPressed: (){},
-            icon: SvgPicture.asset('lib/assets/img/read.svg'),
+            icon: SvgPicture.asset(''),
           ),
           // IconButton(
           //   onPressed: (){},
@@ -62,17 +63,20 @@ class _ReadPageState extends State<ReadPage> {
         ],
       ),
       body: Container(
+        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
         child: ListView(
           children: [
             Container(
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 50),
               child: Text(
                 text??"...",
-                textDirection: TextDirection.ltr,
+                // textDirection: TextDirection.ltr,
+                textAlign: TextAlign.justify,
                 // maxLines: 2,
                 // overflow: TextOverflow.ellipsis,
                 softWrap: true,
                 style:
-                TextStyle(color: Colors.black87, fontSize: 18),
+                TextStyle(color: constantsColor.baseColor, fontSize: 20),
               ),
             ),
           ],

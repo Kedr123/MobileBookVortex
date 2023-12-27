@@ -45,4 +45,23 @@ class BookController {
       );
     });
   }
+
+  static Future<void> updateDog(Book book, database) async {
+    final db = await database;
+    await db.update(
+      'book',
+      book.toMap(),
+      where: 'id = ?',
+      whereArgs: [book.id],
+    );
+  }
+
+  static Future<void> deleteDog(int id, database) async {
+    final db = await database;
+    await db.delete(
+      'book',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }

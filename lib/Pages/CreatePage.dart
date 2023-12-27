@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,7 +23,8 @@ class _CreatePageState extends State<CreatePage> {
 
   void getFilePicker() async{
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      // allowedExtensions: ['txt'],
+      type: FileType.custom,
+      allowedExtensions: ['txt'],
     );
 
     if (result != null) {
@@ -39,6 +41,7 @@ class _CreatePageState extends State<CreatePage> {
       );
 
       await BookController.insertBook(newBook, databaseGlobal);
+      Navigator.of(context).pushReplacementNamed('/');
     } else {
       // User canceled the picker
     }
@@ -56,12 +59,39 @@ class _CreatePageState extends State<CreatePage> {
         ),
       ),
       body: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.fromLTRB(0, 100, 0, 0),
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Выбирите файл"),
-            ElevatedButton(
+            Text("Поддерживаемые типы файлов: TXT",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: constantsColor.baseColor,
+                fontSize: 26,
+              ),),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+                child:ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: constantsColor.baseBackColor,
+                      foregroundColor: constantsColor.baseColor,
+                      surfaceTintColor: constantsColor.baseColor,
+                      padding: EdgeInsets.all(20),
+
+                      side: BorderSide(width: 1, color: constantsColor.baseColor),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5),),
+                      alignment: Alignment.topLeft,
+                    ),
                 onPressed: getFilePicker,
-                child: Text("Выбрать файл")
+                child: Text("Загрузить файл",
+                  style: TextStyle(
+                    color: constantsColor.baseColor,
+                    fontSize: 32,
+                  ),
+                )
+            )
             )
           ],
         ),
@@ -76,8 +106,8 @@ class _CreatePageState extends State<CreatePage> {
           if(item==0){
             Navigator.of(context).pushReplacementNamed("/");
           }
-          if(item==1){
-            Navigator.of(context).pushReplacementNamed("/create");
+          if(item==2){
+            Navigator.of(context).pushReplacementNamed("/star");
           }
         },
         items: <BottomNavigationBarItem>[
